@@ -5,15 +5,15 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MemoryShark.Memory.Objects
+namespace MemoryShark.Memory.Objects.Primitives
 {
     public class Int32MemoryObject : IMemoryObject<int>
     {
         private readonly IMemoryIO memoryIO;
 
-        public long Address { get; set; }
+        public Func<long> Address { get; set; }
 
-        public Int32MemoryObject(IMemoryIO memoryIO, long address)
+        public Int32MemoryObject(IMemoryIO memoryIO, Func<long> address)
         {
             this.memoryIO = memoryIO ?? throw new ArgumentNullException(nameof(memoryIO));
             this.Address = address;
@@ -21,12 +21,12 @@ namespace MemoryShark.Memory.Objects
 
         public int Read()
         {
-            return BitConverter.ToInt32(memoryIO.ReadMemory(Address, Marshal.SizeOf<int>()));
+            return BitConverter.ToInt32(memoryIO.ReadMemory(Address.Invoke(), Marshal.SizeOf<int>()));
         }
 
         public void Write(int value)
         {
-            memoryIO.WriteMemory(Address, BitConverter.GetBytes(value));
+            memoryIO.WriteMemory(Address.Invoke(), BitConverter.GetBytes(value));
         }
     }
 }

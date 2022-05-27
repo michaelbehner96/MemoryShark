@@ -18,7 +18,7 @@ namespace MemoryShark.Resolution.Providers
 
         public long Resolve(PointerChainResolutionArgs resolutionArgs)
         {
-            long currentAddress = resolutionArgs.BaseAddress;
+            long currentAddress = resolutionArgs.BaseAddress.Invoke();
             for (int i = 0; i < resolutionArgs.Offsets.Length; i++)
             {
                 long offsetAddress = currentAddress + resolutionArgs.Offsets[i];
