@@ -2,12 +2,12 @@
 {
     public class PointerChainResolutionArgs
     {
-        public long BaseAddress { get; set; }
+        public Func<long> BaseAddress { get; set; }
         public long[] Offsets { get; set; }
 
-        public PointerChainResolutionArgs(long baseAddress, params long[] offsets)
+        public PointerChainResolutionArgs(Func<long> baseAddress, params long[] offsets)
         {
-            BaseAddress = baseAddress;
+            BaseAddress = baseAddress ?? throw new ArgumentNullException(nameof(baseAddress));
             Offsets = offsets ?? throw new ArgumentNullException(nameof(offsets));
         }
     }
