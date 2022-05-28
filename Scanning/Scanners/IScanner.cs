@@ -1,9 +1,6 @@
 ﻿namespace Sharkbytes.Core
 {
-    #region Hooking
-
-    #endregion
-
+   
     #region Scanning
 
     /*
