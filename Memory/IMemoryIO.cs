@@ -9,8 +9,8 @@ namespace MemoryShark.Memory
 {
     public interface IMemoryIO
     {
-        byte[] ReadMemory(long address, int length);
+        byte[] ReadMemory(long address, ulong length);
 
-        void WriteMemory(long address, byte[] value);
+        void WriteMemory(long address, params byte[] value);
     }
 }

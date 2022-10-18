@@ -6,9 +6,9 @@ namespace MemoryShark.Memory.Objects.Primitives
     {
         private readonly IMemoryIO memoryIO;
 
-        public Func<long> Address { get; set; }
+        public long Address { get; set; }
 
-        public DoubleMemoryObject(IMemoryIO memoryIO, Func<long> address)
+        public DoubleMemoryObject(IMemoryIO memoryIO, long address)
         {
             this.memoryIO = memoryIO ?? throw new ArgumentNullException(nameof(memoryIO));
             this.Address = address;
@@ -16,12 +16,12 @@ namespace MemoryShark.Memory.Objects.Primitives
 
         public double Read()
         {
-            return BitConverter.ToDouble(memoryIO.ReadMemory(Address.Invoke(), Marshal.SizeOf<double>()));
+            return BitConverter.ToDouble(memoryIO.ReadMemory(Address, (ulong)Marshal.SizeOf<double>()));
         }
 
         public void Write(double value)
         {
-            memoryIO.WriteMemory(Address.Invoke(), BitConverter.GetBytes(value));
+            memoryIO.WriteMemory(Address, BitConverter.GetBytes(value));
         }
     }
 }

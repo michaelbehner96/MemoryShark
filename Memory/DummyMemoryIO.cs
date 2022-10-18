@@ -16,7 +16,7 @@ namespace MemoryShark.Memory
             this.random = random ?? throw new ArgumentNullException(nameof(random));
         }
 
-        public byte[] ReadMemory(long address, int length)
+        public byte[] ReadMemory(long address, ulong length)
         {
             byte[] buffer = new byte[length];
             random.NextBytes(buffer);

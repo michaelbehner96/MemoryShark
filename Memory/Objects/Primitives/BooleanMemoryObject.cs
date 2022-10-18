@@ -6,9 +6,9 @@ namespace MemoryShark.Memory.Objects.Primitives
     {
         private readonly IMemoryIO memoryIO;
 
-        public Func<long> Address { get; set; }
+        public long Address { get; set; }
 
-        public BooleanMemoryObject(IMemoryIO memoryIO, Func<long> address)
+        public BooleanMemoryObject(IMemoryIO memoryIO, long address)
         {
             this.memoryIO = memoryIO ?? throw new ArgumentNullException(nameof(memoryIO));
             this.Address = address;
@@ -16,12 +16,12 @@ namespace MemoryShark.Memory.Objects.Primitives
 
         public bool Read()
         {
-            return BitConverter.ToBoolean(memoryIO.ReadMemory(Address.Invoke(), Marshal.SizeOf<bool>()));
+            return BitConverter.ToBoolean(memoryIO.ReadMemory(Address, (ulong)Marshal.SizeOf<bool>()));
         }
 
         public void Write(bool value)
         {
-            memoryIO.WriteMemory(Address.Invoke(), BitConverter.GetBytes(value));
+            memoryIO.WriteMemory(Address, BitConverter.GetBytes(value));
         }
     }
 }

@@ -11,9 +11,9 @@ namespace MemoryShark.Memory.Objects.Primitives
     {
         private readonly IMemoryIO memoryIO;
 
-        public Func<long> Address { get; set; }
+        public long Address { get; set; }
 
-        public UInt32MemoryObject(IMemoryIO memoryIO, Func<long> address)
+        public UInt32MemoryObject(IMemoryIO memoryIO, long address)
         {
             this.memoryIO = memoryIO ?? throw new ArgumentNullException(nameof(memoryIO));
             this.Address = address;
@@ -21,12 +21,12 @@ namespace MemoryShark.Memory.Objects.Primitives
 
         public uint Read()
         {
-            return BitConverter.ToUInt32(memoryIO.ReadMemory(Address.Invoke(), Marshal.SizeOf<uint>()));
+            return BitConverter.ToUInt32(memoryIO.ReadMemory(Address, (ulong)Marshal.SizeOf<uint>()));
         }
 
         public void Write(uint value)
         {
-            memoryIO.WriteMemory(Address.Invoke(), BitConverter.GetBytes(value));
+            memoryIO.WriteMemory(Address, BitConverter.GetBytes(value));
         }
     }
 }

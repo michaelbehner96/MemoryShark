@@ -10,7 +10,10 @@ namespace MemoryShark.Processes
     public interface IProcessHandler
     {
         public Process Process { get; }
+
         public bool Is64BitProcess { get; }
+
+        public ProcessModule? GetModuleByName(string name);
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MemoryShark.Utility;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,15 +17,15 @@ namespace MemoryShark.Memory
             this.memoryIO = memoryIO ?? throw new ArgumentNullException(nameof(memoryIO));
         }
 
-        public byte[] ReadMemory(long address, int length)
+        public byte[] ReadMemory(long address, ulong length)
         {
-            Console.WriteLine($"Logging ReadMemory for address=0x{address.ToString("X16")}");
+            Console.WriteLine($"Logging ReadMemory for address={address.ToHexadecimalAddress()}");
             return memoryIO.ReadMemory(address, length);
         }
 
         public void WriteMemory(long address, byte[] value)
         {
-            Console.WriteLine($"Logging WriteMemory for value={String.Join(' ', value.Select(b => b.ToString("X2")))}");
+            Console.WriteLine($"Logging WriteMemory for value={value.ToConcatentatedString()}");
             memoryIO.WriteMemory(address, value);
         }
     }
